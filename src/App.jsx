@@ -22,6 +22,7 @@ import {
  * image: batik1
  */
 
+
 const PRODUCTS = [
   {
     id: "bt-001",
@@ -134,6 +135,156 @@ const SORTS = [
   { id: "stock_desc", label: "Stok terbanyak" },
 ];
 
+
+function buildWhatsAppMessage(items, total) {
+  const lines = items.map((it, idx) => {
+    const subtotal = it.price * (it.qty || 1);
+    return `${idx + 1}. ${it.name} x${it.qty} = ${formatIDR(subtotal)}`;
+  });
+
+  return [
+    "Halo, saya mau pesan produk berikut:",
+    "",
+    ...lines,
+    "",
+    `Total: ${formatIDR(total)}`,
+    "",
+    "Mohon info ketersediaan & ongkir ya. Terima kasih 🙏",
+  ].join("\n");
+}
+
+function openWhatsApp(phoneNumber, text) {
+  const clean = String(phoneNumber || "").replace(/[^0-9]/g, "");
+  const url = `https://wa.me/${clean}?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+
+function CartDrawer({
+  open,
+  onClose,
+  items,
+  onInc,
+  onDec,
+  onRemove,
+  onClear,
+  waNumber,
+}) {
+  const total = items.reduce((s, it) => s + it.price * (it.qty || 1), 0);
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <div className="p-5 md:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <div className="text-xl font-semibold">Keranjang</div>
+            <div className="text-sm text-slate-500">
+              {items.length ? `${items.length} produk` : "Masih kosong"}
+            </div>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="h-10 w-10 rounded-2xl border hover:bg-slate-50 grid place-items-center"
+            aria-label="Tutup keranjang"
+          >
+            <X className="h-4 w-4 text-slate-600" />
+          </button>
+        </div>
+
+        <div className="mt-5 space-y-3">
+          {items.length === 0 ? (
+            <div className="rounded-3xl border bg-white p-6 text-sm text-slate-600">
+              Belum ada item. Tambahkan produk dulu ya.
+            </div>
+          ) : (
+            items.map((it) => (
+              <div
+                key={it.id}
+                className="rounded-3xl border bg-white p-3 flex gap-3"
+              >
+                <div className="h-16 w-16 rounded-2xl overflow-hidden bg-slate-100 border shrink-0">
+                  <img
+                    src={it.image}
+                    alt={it.name}
+                    className="h-16 w-16 object-cover"
+                    onError={(e) => (e.currentTarget.src = placeholderDataUri(it.name))}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <div className="font-semibold leading-snug">{it.name}</div>
+                  <div className="text-sm text-slate-600">{formatIDR(it.price)}</div>
+
+                  <div className="mt-2 flex items-center gap-2">
+                    <button
+                      onClick={() => onDec(it.id)}
+                      className="h-9 w-9 rounded-2xl border hover:bg-slate-50"
+                      aria-label="Kurangi qty"
+                      type="button"
+                    >
+                      −
+                    </button>
+                    <div className="min-w-10 text-center font-medium">{it.qty}</div>
+                    <button
+                      onClick={() => onInc(it.id)}
+                      className="h-9 w-9 rounded-2xl border hover:bg-slate-50"
+                      aria-label="Tambah qty"
+                      type="button"
+                    >
+                      +
+                    </button>
+
+                    <button
+                      onClick={() => onRemove(it.id)}
+                      className="ml-auto rounded-2xl border px-3 py-2 text-sm hover:bg-slate-50"
+                      type="button"
+                    >
+                      Hapus
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {items.length ? (
+          <>
+            <div className="mt-4 rounded-3xl border bg-white p-4 flex items-center justify-between">
+              <div className="text-sm text-slate-600">Total</div>
+              <div className="text-xl font-semibold">{formatIDR(total)}</div>
+            </div>
+
+            <div className="mt-3 flex flex-col sm:flex-row gap-2">
+              <button
+                onClick={() => {
+                  const msg = buildWhatsAppMessage(items, total);
+                  openWhatsApp(waNumber, msg);
+                }}
+                className="flex-1 rounded-2xl bg-emerald-600 text-white py-2 hover:bg-emerald-700 flex items-center justify-center gap-2"
+                type="button"
+              >
+                <span className="font-semibold">Checkout via WhatsApp</span>
+              </button>
+
+              <button
+                onClick={onClear}
+                className="rounded-2xl border bg-white px-4 py-2 hover:bg-slate-50"
+                type="button"
+              >
+                Kosongkan
+              </button>
+            </div>
+
+           
+          </>
+        ) : null}
+      </div>
+    </Modal>
+  );
+}
+
 /* ===================== UTIL ===================== */
 
 function formatIDR(n) {
@@ -174,8 +325,8 @@ function placeholderDataUri(title = "EtnikKatalog") {
     <circle cx="180" cy="180" r="90" fill="#fb923c" opacity="0.25"/>
     <circle cx="980" cy="620" r="140" fill="#f43f5e" opacity="0.18"/>
     <text x="80" y="430" font-family="ui-sans-serif, system-ui" font-size="56" fill="#0f172a" opacity="0.85">${escapeXml(
-      title
-    )}</text>
+    title
+  )}</text>
     <text x="80" y="500" font-family="ui-sans-serif, system-ui" font-size="26" fill="#334155" opacity="0.7">Gambar tidak tersedia (fallback)</text>
   </svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
@@ -221,8 +372,8 @@ function Badge({ children, variant = "default" }) {
     variant === "soft"
       ? "bg-white/70 border-orange-200 text-slate-700"
       : variant === "eco"
-      ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-      : "bg-slate-50 border-slate-200 text-slate-700";
+        ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+        : "bg-slate-50 border-slate-200 text-slate-700";
   return <span className={`${base} ${styles}`}>{children}</span>;
 }
 
@@ -243,6 +394,9 @@ function StarRow({ rating }) {
     </div>
   );
 }
+
+
+
 
 function Toast({ open, title, description, onClose }) {
   return (
@@ -321,7 +475,8 @@ export default function App() {
   const [category, setCategory] = useState("Semua");
   const [sortId, setSortId] = useState("reco");
   const [ecoOnly, setEcoOnly] = useState(false);
-
+  const WA_NUMBER = "6289638233061";
+  const [openCart, setOpenCart] = useState(false);
   const [priceRange, setPriceRange] = useState({
     min: absoluteMin,
     max: absoluteMax,
@@ -335,6 +490,30 @@ export default function App() {
 
   const [toast, setToast] = useState({ open: false, title: "", description: "" });
 
+
+  function incCart(id) {
+    setCart((prev) =>
+      prev.map((it) => (it.id === id ? { ...it, qty: it.qty + 1 } : it))
+    );
+  }
+
+  function decCart(id) {
+    setCart((prev) =>
+      prev
+        .map((it) => (it.id === id ? { ...it, qty: Math.max(1, it.qty - 1) } : it))
+        .filter(Boolean)
+    );
+  }
+
+  function removeCart(id) {
+    setCart((prev) => prev.filter((it) => it.id !== id));
+  }
+
+  function clearCart() {
+    setCart([]);
+  }
+
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
@@ -345,9 +524,9 @@ export default function App() {
       const inQuery = !q
         ? true
         : [p.name, p.location, p.category, ...(p.tags || [])]
-            .join(" ")
-            .toLowerCase()
-            .includes(q);
+          .join(" ")
+          .toLowerCase()
+          .includes(q);
       return inCat && inEco && inPrice && inQuery;
     });
 
@@ -434,19 +613,9 @@ export default function App() {
               </div>
             </div>
 
+
             <button
-              className="rounded-2xl border bg-white px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"
-              onClick={() => {
-                setToast({
-                  open: true,
-                  title: "Keranjang (demo)",
-                  description: cartCount ? `${cartCount} item • ${formatIDR(cartTotal)}` : "Masih kosong",
-                });
-                window.clearTimeout(window.__etnik_toast_timer);
-                window.__etnik_toast_timer = window.setTimeout(() => {
-                  setToast((t) => ({ ...t, open: false }));
-                }, 1800);
-              }}
+              onClick={() => setOpenCart(true)}
             >
               <ShoppingBag className="h-4 w-4" />
               Keranjang
@@ -456,6 +625,7 @@ export default function App() {
                 </span>
               ) : null}
             </button>
+
           </div>
 
           {/* FILTER ROW */}
@@ -481,6 +651,7 @@ export default function App() {
                     {c}
                   </option>
                 ))}
+                className="rounded-2xl border bg-white px-3 py-2 text-sm hover:bg-slate-50 flex items-center gap-2"
               </select>
             </div>
 
@@ -534,11 +705,9 @@ export default function App() {
             Koleksi budaya Nusantara
           </div>
           <div className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight">
-            Temukan produk etnik yang autentik — mudah dicari, nyaman dilihat.
-          </div>
-          <div className="mt-2 text-sm text-slate-600 max-w-2xl">
-            Fokus UX: pencarian cepat, filter simpel, detail jelas, dan fallback gambar otomatis (jadi tidak ada kotak hitam/broken).
-          </div>
+          Temukan batik, tenun, dan kerajinan Nusantara dengan cepat — tiap produk punya cerita, asal daerah, dan nilai budaya yang autentik.
+                    </div>
+        
         </section>
 
         {/* GRID */}
@@ -600,14 +769,22 @@ export default function App() {
                           </div>
 
                           <div className="absolute right-3 top-3">
-                            <button
-                              type="button"
+                            <div
+                              role="button"
+                              tabIndex={0}
                               onClick={(ev) => {
                                 ev.preventDefault();
                                 ev.stopPropagation();
                                 toggleFav(p.id);
                               }}
-                              className="h-9 w-9 rounded-2xl bg-white/85 border grid place-items-center hover:bg-white"
+                              onKeyDown={(ev) => {
+                                if (ev.key === "Enter" || ev.key === " ") {
+                                  ev.preventDefault();
+                                  ev.stopPropagation();
+                                  toggleFav(p.id);
+                                }
+                              }}
+                              className="h-9 w-9 rounded-2xl bg-white/85 border grid place-items-center hover:bg-white cursor-pointer"
                               aria-label={isFav ? "Hapus favorit" : "Tambah favorit"}
                             >
                               <Heart
@@ -616,8 +793,9 @@ export default function App() {
                                   (isFav ? "fill-rose-500 text-rose-500" : "text-slate-600")
                                 }
                               />
-                            </button>
+                            </div>
                           </div>
+
                         </div>
                       </button>
 
@@ -797,6 +975,18 @@ export default function App() {
         ) : null}
       </Modal>
 
+      {/* CartDrawer */}
+
+      <CartDrawer
+        open={openCart}
+        onClose={() => setOpenCart(false)}
+        items={cart}
+        onInc={incCart}
+        onDec={decCart}
+        onRemove={removeCart}
+        onClear={clearCart}
+        waNumber={WA_NUMBER}
+      />
       {/* TOAST */}
       <Toast
         open={toast.open}
