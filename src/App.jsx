@@ -642,10 +642,7 @@ export default function App() {
       {/* HERO */}
       <main className="max-w-6xl mx-auto px-4 py-6">
         <section className="rounded-3xl border border-black/5 bg-gradient-to-br from-brand-champagne via-brand-sand/40 to-brand-rose/40 p-6">
-          <div className="mb-4 rounded-2xl bg-brand-wine text-white p-3">
-            TEST brand-wine
-          </div>
-
+         
           <div className="text-sm text-slate-600 flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
             Koleksi budaya Nusantara
