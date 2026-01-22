@@ -11,122 +11,61 @@ import {
   X,
 } from "lucide-react";
 
-/* ===================== DATA ===================== */
-/**
- * Tips biar gambar 100% aman:
- * - Kalau kamu sering offline / Unsplash kadang keblok, simpan gambar lokal:
- *   taruh di /src/assets/ lalu pakai import (contoh di komentar bawah).
- *
- * Contoh lokal:
- * import batik1 from "./assets/batik-1.jpg";
- * image: batik1
- */
+
 
 
 const PRODUCTS = [
   {
-    id: "bt-001",
-    name: "Batik Tulis Parang Klasik",
+    id: "jw-001",
+    name: "Java Collection Bustier",
     price: 850000,
-    location: "Yogyakarta",
-    category: "Batik",
-    tags: ["Handmade", "Premium"],
+    location: "Jawa",
+    category: "Bustier",
+    tags: ["Timeless", "Elegant"],
     rating: 4.8,
     eco: true,
     stock: 7,
     story:
-      "Motif Parang termasuk motif tua yang melambangkan keteguhan dan kesinambungan. Dibuat dengan teknik tulis tradisional.",
-    materials: ["Katun Primisima", "Pewarna alami"],
-    image:
-      "https://images.unsplash.com/photo-1520975958225-8fc1d7a5b9cf?auto=format&fit=crop&w=1200&q=60",
+      "Java Collection Bustier menghadirkan interpretasi modern dari keanggunan budaya Jawa melalui siluet bustier yang feminin dan tegas. Terinspirasi dari filosofi kelembutan dan keteguhan perempuan Jawa, koleksi ini memadukan detail motif tradisional dengan potongan modern yang mempertegas bentuk tubuh secara elegan.\n\nPemilihan warna-warna hangat dan klasik menciptakan kesan anggun, berkelas, sekaligus timeless. Bustier dalam Java Collection dirancang untuk perempuan yang ingin tampil percaya diri, berkarakter, dan tetap membawa nilai budaya dalam setiap tampilan.",
+    materials: ["Fabric premium", "Detail motif tradisional"],
+    // public/img/jawa-1.jpg -> akses via "/img/jawa-1.jpg"
+    image: "/img/jawa-1.jpg",
     images: [
-      "https://images.unsplash.com/photo-1520975958225-8fc1d7a5b9cf?auto=format&fit=crop&w=1400&q=60",
-      "https://images.unsplash.com/photo-1520975681085-84d88813e0d3?auto=format&fit=crop&w=1400&q=60",
+      "/img/jawa-1.jpg",
+      "/img/jawa-2.jpg",
+      "/img/jawa-3.jpg",
+      "/img/jawa-4.jpg",
+      "/img/jawa-5.jpg",
+      "/img/jawa-6.jpg",
     ],
   },
   {
-    id: "ik-002",
-    name: "Ikat Flores Tenun",
-    price: 650000,
-    location: "NTT",
-    category: "Tenun",
-    tags: ["Limited", "Heritage"],
+    id: "bl-002",
+    name: "Bali Collection Bustier",
+    price: 850000,
+    location: "Bali",
+    category: "Bustier",
+    tags: ["Bold", "Artistic"],
     rating: 4.7,
     eco: true,
-    stock: 12,
+    stock: 7,
     story:
-      "Tenun ikat Flores dikenal kaya simbol dan warna. Setiap pola membawa cerita komunitas serta tradisi turun-temurun.",
-    materials: ["Benang kapas", "Pewarna tradisional"],
-    image:
-      "https://images.unsplash.com/photo-1520975693418-35a3b7ca9c89?auto=format&fit=crop&w=1200&q=60",
+      "Bali Collection Bustier terinspirasi dari keindahan alam dan kekayaan budaya Bali yang penuh ekspresi dan spiritualitas. Mengangkat elemen motif khas Bali yang dinamis, koleksi ini diwujudkan dalam siluet bustier yang tegas namun tetap lembut, mencerminkan harmoni antara kekuatan dan keanggunan perempuan.\n\nDetail desain yang artistik dipadukan dengan pilihan warna yang hangat dan eksotis, menghadirkan kesan berani, feminin, dan penuh karakter. Bali Collection dirancang untuk perempuan yang ingin tampil menonjol, percaya diri, dan mengekspresikan jiwa bebasnya tanpa meninggalkan nilai budaya Nusantara.",
+    materials: ["Fabric premium", "Detail motif khas Bali"],
+    // public/img/bali-1.png -> akses via "/img/bali-1.png"
+    image: "/img/bali-1.png",
     images: [
-      "https://images.unsplash.com/photo-1520975693418-35a3b7ca9c89?auto=format&fit=crop&w=1400&q=60",
-      "https://images.unsplash.com/photo-1520975740741-6d2a2b8d6f6e?auto=format&fit=crop&w=1400&q=60",
-    ],
-  },
-  {
-    id: "uk-003",
-    name: "Ukiran Dayak Mini",
-    price: 420000,
-    location: "Kalimantan",
-    category: "Kerajinan",
-    tags: ["Souvenir", "Art"],
-    rating: 4.5,
-    eco: false,
-    stock: 4,
-    story:
-      "Ukiran khas Dayak memiliki pola berulang yang mencerminkan keseimbangan alam dan kehidupan. Cocok untuk dekorasi.",
-    materials: ["Kayu", "Finishing natural"],
-    image:
-      "https://images.unsplash.com/photo-1459664018906-085c36f472af?auto=format&fit=crop&w=1200&q=60",
-    images: [
-      "https://images.unsplash.com/photo-1459664018906-085c36f472af?auto=format&fit=crop&w=1400&q=60",
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1400&q=60",
-    ],
-  },
-  {
-    id: "sn-004",
-    name: "Songket Palembang",
-    price: 1200000,
-    location: "Sumatera Selatan",
-    category: "Tenun",
-    tags: ["Luxury", "Gold thread"],
-    rating: 4.9,
-    eco: false,
-    stock: 3,
-    story:
-      "Songket ditenun dengan benang emas/perak, sering dipakai dalam acara adat. Teksturnya kaya dan berkilau.",
-    materials: ["Sutra", "Benang metalik"],
-    image:
-      "https://images.unsplash.com/photo-1520975948230-2f8e2be9d7de?auto=format&fit=crop&w=1200&q=60",
-    images: [
-      "https://images.unsplash.com/photo-1520975948230-2f8e2be9d7de?auto=format&fit=crop&w=1400&q=60",
-      "https://images.unsplash.com/photo-1520975937806-516e3d6f0f3e?auto=format&fit=crop&w=1400&q=60",
-    ],
-  },
-  {
-    id: "ag-006",
-    name: "Aksesori Manik Papua",
-    price: 180000,
-    location: "Papua",
-    category: "Aksesori",
-    tags: ["Colorful", "Handmade"],
-    rating: 4.6,
-    eco: true,
-    stock: 20,
-    story:
-      "Aksesori manik Papua dikenal warna berani dan ritme pola yang khas. Ringan dan cocok untuk gaya harian.",
-    materials: ["Manik", "Benang"],
-    image:
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=60",
-    images: [
-      "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=60",
-      "https://images.unsplash.com/photo-1520975740741-6d2a2b8d6f6e?auto=format&fit=crop&w=1400&q=60",
+      "/img/bali-1.png",
+      "/img/bali-2.png",
+      "/img/bali-3.png",
+      "/img/bali-4.png",
+      "/img/bali-5.png",
     ],
   },
 ];
 
-const CATEGORIES = ["Semua", "Batik", "Tenun", "Kerajinan", "Aksesori"];
+const CATEGORIES = ["Semua", "Bustier"];
+
 const SORTS = [
   { id: "reco", label: "Rekomendasi" },
   { id: "price_asc", label: "Harga: rendah → tinggi" },
@@ -134,6 +73,7 @@ const SORTS = [
   { id: "rating_desc", label: "Rating tertinggi" },
   { id: "stock_desc", label: "Stok terbanyak" },
 ];
+
 
 
 function buildWhatsAppMessage(items, total) {
@@ -262,7 +202,7 @@ function CartDrawer({
                   const msg = buildWhatsAppMessage(items, total);
                   openWhatsApp(waNumber, msg);
                 }}
-                className="flex-1 rounded-2xl bg-emerald-600 text-white py-2 hover:bg-emerald-700 flex items-center justify-center gap-2"
+                className="flex-1 rounded-2xl bg-brand-wine text-white py-2 hover:bg-brand-maroon flex items-center justify-center gap-2"
                 type="button"
               >
                 <span className="font-semibold">Checkout via WhatsApp</span>
@@ -277,7 +217,7 @@ function CartDrawer({
               </button>
             </div>
 
-           
+
           </>
         ) : null}
       </div>
@@ -316,14 +256,14 @@ function placeholderDataUri(title = "EtnikKatalog") {
   <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800">
     <defs>
       <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#fff7ed"/>
-        <stop offset="0.5" stop-color="#ffedd5"/>
-        <stop offset="1" stop-color="#ffe4e6"/>
+        <stop offset="0" stop-color="#F2E6CC"/>
+        <stop offset="0.5" stop-color="#F2D98B" stop-opacity="0.35"/>
+        <stop offset="1" stop-color="#D6A7BA" stop-opacity="0.35"/>
       </linearGradient>
     </defs>
     <rect width="1200" height="800" fill="url(#g)"/>
-    <circle cx="180" cy="180" r="90" fill="#fb923c" opacity="0.25"/>
-    <circle cx="980" cy="620" r="140" fill="#f43f5e" opacity="0.18"/>
+    <circle cx="180" cy="180" r="90" fill="#881F2B" opacity="0.16"/>
+    <circle cx="980" cy="620" r="140" fill="#690022" opacity="0.12"/>
     <text x="80" y="430" font-family="ui-sans-serif, system-ui" font-size="56" fill="#0f172a" opacity="0.85">${escapeXml(
     title
   )}</text>
@@ -366,16 +306,16 @@ function useLocalStorageState(key, initialValue) {
 /* ===================== UI ATOMS ===================== */
 
 function Badge({ children, variant = "default" }) {
-  const base =
-    "inline-flex items-center rounded-full px-2 py-0.5 text-xs border";
+  const base = "inline-flex items-center rounded-full px-2 py-0.5 text-xs border";
   const styles =
     variant === "soft"
-      ? "bg-white/70 border-orange-200 text-slate-700"
+      ? "bg-brand-champagne/70 border-black/10 text-slate-700"
       : variant === "eco"
-        ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-        : "bg-slate-50 border-slate-200 text-slate-700";
+        ? "bg-brand-rose/30 border-brand-rose/60 text-brand-wine"
+        : "bg-white/70 border-black/10 text-slate-700";
   return <span className={`${base} ${styles}`}>{children}</span>;
 }
+
 
 function StarRow({ rating }) {
   const { full, half, empty } = ratingStars(rating);
@@ -396,8 +336,6 @@ function StarRow({ rating }) {
 }
 
 
-
-
 function Toast({ open, title, description, onClose }) {
   return (
     <AnimatePresence>
@@ -409,9 +347,10 @@ function Toast({ open, title, description, onClose }) {
           className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50"
         >
           <div className="w-[92vw] max-w-md rounded-2xl border bg-white shadow-lg p-4 flex items-start gap-3">
-            <div className="h-9 w-9 rounded-xl bg-orange-50 border border-orange-200 grid place-items-center">
-              <ShoppingBag className="h-4 w-4 text-orange-600" />
+            <div className="h-9 w-9 rounded-xl bg-brand-rose/30 border border-brand-rose/60 grid place-items-center">
+              <ShoppingBag className="h-4 w-4 text-brand-wine" />
             </div>
+
             <div className="flex-1">
               <div className="font-semibold text-slate-900">{title}</div>
               {description ? (
@@ -489,6 +428,7 @@ export default function App() {
   const [selected, setSelected] = useState(null);
 
   const [toast, setToast] = useState({ open: false, title: "", description: "" });
+  const [activeImg, setActiveImg] = useState(0);
 
 
   function incCart(id) {
@@ -583,8 +523,10 @@ export default function App() {
 
   function openProduct(p) {
     setSelected(p);
+    setActiveImg(0);
     setOpenDetail(true);
   }
+
 
   function resetAll() {
     setQuery("");
@@ -598,17 +540,17 @@ export default function App() {
   const cartTotal = cart.reduce((s, it) => s + it.price * (it.qty || 1), 0);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen bg-brand-champagne text-slate-900">
       {/* TOP BAR */}
-      <div className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
+      <div className="sticky top-0 z-30 bg-brand-champagne/80 backdrop-blur border-b border-black/5">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-orange-100 via-amber-100 to-rose-100 border grid place-items-center">
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-brand-sand via-brand-champagne to-brand-rose border border-black/5 grid place-items-center">
                 <Sparkles className="h-5 w-5 text-slate-800" />
               </div>
               <div className="leading-tight">
-                <div className="font-semibold tracking-tight">EtnikKatalog</div>
+                <div className="font-semibold tracking-tight">Ravanti.Studio</div>
                 <div className="text-xs text-slate-500">Katalog budaya yang mudah dipakai</div>
               </div>
             </div>
@@ -636,7 +578,7 @@ export default function App() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari batik, tenun, ukiran…"
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border bg-white focus:outline-none focus:ring-2 focus:ring-orange-300"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-black/10 bg-white focus:outline-none focus:ring-2 focus:ring-brand-rose"
               />
             </div>
 
@@ -644,7 +586,7 @@ export default function App() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full rounded-2xl border bg-white px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-orange-300"
+                className="w-full rounded-2xl border border-black/10 bg-white px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-rose"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>
@@ -676,7 +618,7 @@ export default function App() {
                 type="checkbox"
                 checked={ecoOnly}
                 onChange={(e) => setEcoOnly(e.target.checked)}
-                className="h-4 w-4 accent-orange-500"
+                className="h-4 w-4 accent-brand-wine"
               />
               Tampilkan Eco saja
             </label>
@@ -699,15 +641,19 @@ export default function App() {
 
       {/* HERO */}
       <main className="max-w-6xl mx-auto px-4 py-6">
-        <section className="rounded-3xl border bg-gradient-to-br from-orange-50 via-amber-50 to-rose-50 p-6">
+        <section className="rounded-3xl border border-black/5 bg-gradient-to-br from-brand-champagne via-brand-sand/40 to-brand-rose/40 p-6">
+          <div className="mb-4 rounded-2xl bg-brand-wine text-white p-3">
+            TEST brand-wine
+          </div>
+
           <div className="text-sm text-slate-600 flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
             Koleksi budaya Nusantara
           </div>
           <div className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight">
-          Temukan batik, tenun, dan kerajinan Nusantara dengan cepat — tiap produk punya cerita, asal daerah, dan nilai budaya yang autentik.
-                    </div>
-        
+            Temukan kerajinan Nusantara dengan cepat — tiap produk punya cerita, asal daerah, dan nilai budaya yang autentik.
+          </div>
+
         </section>
 
         {/* GRID */}
@@ -720,7 +666,7 @@ export default function App() {
               </div>
               <button
                 onClick={resetAll}
-                className="mt-5 rounded-2xl bg-slate-900 text-white px-4 py-2 hover:bg-slate-800"
+                className="mt-5 rounded-2xl bg-brand-wine text-white px-4 py-2 hover:bg-brand-maroon"
               >
                 Reset filter
               </button>
@@ -757,7 +703,7 @@ export default function App() {
 
                           <div className="absolute left-3 top-3 flex gap-2">
                             {p.eco ? (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-white/85 border px-2 py-0.5 text-xs text-emerald-700">
+                              <span className="inline-flex items-center gap-1 rounded-full bg-white/85 border border-black/10 px-2 py-0.5 text-xs text-brand-wine">
                                 <Leaf className="h-3.5 w-3.5" /> Eco
                               </span>
                             ) : null}
@@ -784,7 +730,7 @@ export default function App() {
                                   toggleFav(p.id);
                                 }
                               }}
-                              className="h-9 w-9 rounded-2xl bg-white/85 border grid place-items-center hover:bg-white cursor-pointer"
+                              className="h-9 w-9 rounded-2xl bg-white/85 border border-black/10 grid place-items-center hover:bg-white cursor-pointer"
                               aria-label={isFav ? "Hapus favorit" : "Tambah favorit"}
                             >
                               <Heart
@@ -833,7 +779,7 @@ export default function App() {
                           <button
                             onClick={() => addToCart(p)}
                             disabled={p.stock <= 0}
-                            className="flex-1 rounded-2xl bg-slate-900 text-white py-2 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            className="flex-1 rounded-2xl bg-brand-wine text-white py-2 hover:bg-brand-maroon disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                           >
                             <ShoppingBag className="h-4 w-4" />
                             {p.stock > 0 ? "Tambah" : "Habis"}
@@ -855,7 +801,7 @@ export default function App() {
         </section>
 
         <footer className="mt-10 pb-8 text-sm text-slate-500">
-          © {new Date().getFullYear()} EtnikKatalog — template React katalog etnik.
+          © {new Date().getFullYear()} Ravanti.Studio — Produk katalog etnik.
         </footer>
       </main>
 
@@ -893,17 +839,50 @@ export default function App() {
             </div>
 
             <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="rounded-3xl overflow-hidden border bg-slate-100">
-                <img
-                  src={selected.images?.[0] || selected.image}
-                  alt={selected.name}
-                  className="w-full h-72 object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = placeholderDataUri(selected.name);
-                  }}
-                />
+              {/* LEFT: IMAGE + THUMBNAILS */}
+              <div>
+                <div className="rounded-3xl overflow-hidden border bg-slate-100">
+                  <img
+                    src={selected.images?.[activeImg] || selected.image}
+                    alt={selected.name}
+                    className="w-full h-72 object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = placeholderDataUri(selected.name);
+                    }}
+                  />
+                </div>
+
+                {/* Thumbnails */}
+                {(selected.images?.length || 0) > 1 ? (
+                  <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+                    {selected.images.map((src, idx) => (
+                      <button
+                        key={`${src}-${idx}`}
+                        type="button"
+                        onClick={() => setActiveImg(idx)}
+                        className={
+                          "h-16 w-16 rounded-2xl overflow-hidden border shrink-0 " +
+                          (idx === activeImg
+                            ? "border-brand-wine ring-2 ring-brand-rose"
+                            : "border-black/10 hover:border-black/20")
+                        }
+                        aria-label={`Lihat foto ${idx + 1}`}
+                      >
+                        <img
+                          src={src}
+                          alt={`${selected.name} foto ${idx + 1}`}
+                          className="h-16 w-16 object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = placeholderDataUri(selected.name);
+                          }}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
               </div>
 
+              {/* RIGHT: DETAILS */}
               <div className="space-y-4">
                 <div className="flex items-end justify-between gap-3">
                   <div>
@@ -946,10 +925,11 @@ export default function App() {
                   <button
                     onClick={() => addToCart(selected)}
                     disabled={selected.stock <= 0}
-                    className="flex-1 rounded-2xl bg-slate-900 text-white py-2 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 rounded-2xl bg-brand-wine text-white py-2 hover:bg-brand-maroon disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     <ShoppingBag className="h-4 w-4" /> Tambah ke Keranjang
                   </button>
+
                   <button
                     onClick={() => toggleFav(selected.id)}
                     className="rounded-2xl border bg-white px-4 py-2 hover:bg-slate-50 flex items-center justify-center gap-2"
@@ -966,11 +946,10 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="text-xs text-slate-500">
-                  Tip: tambahkan tombol “Beli via WhatsApp” / marketplace untuk konversi lebih cepat.
-                </div>
+              
               </div>
             </div>
+
           </div>
         ) : null}
       </Modal>
